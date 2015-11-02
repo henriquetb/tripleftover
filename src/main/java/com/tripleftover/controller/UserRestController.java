@@ -28,6 +28,12 @@ class UserRestController {
 	User userById (@PathVariable("id") Long id){
 		return this.userRepository.findById(id);
 	}
+
+	
+	@RequestMapping("/name/{name}")
+	Collection<User> userByName (@PathVariable("name") String name){
+		return this.userRepository.findByNameLikeIgnoreCase("%"+name+"%");
+	}
 	
 
 	

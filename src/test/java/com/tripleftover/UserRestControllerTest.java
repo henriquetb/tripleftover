@@ -32,7 +32,6 @@ public class UserRestControllerTest extends RestControllersTest{
 	
 	private String baseUrl = "/users";
 	
-	@Autowired UserRepository userRepository;
 	private List<User> userList = new ArrayList<User>();
 	
 	@Before
@@ -66,6 +65,26 @@ public class UserRestControllerTest extends RestControllersTest{
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.id", Matchers.equalTo(userList.get(0).getId().intValue())))
 				.andExpect(jsonPath("$.name", Matchers.equalTo(userList.get(0).getName())));
+	}
+	
+
+	
+	@Test
+	public void findByName_NonExistingName_returnsEmptyString() throws Exception {
+		mockMvc.perform(getUser(null, "noname"))
+				.andExpect(status().isOk())
+				.andExpect(content().string(""));
+				//.andDo(print());
+	}
+	
+	@Test
+	public void findByName_ExistingPartial_returns2UserAttributes() throws Exception {
+		mockMvc.perform(getUser(null, "h"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$[0].id", Matchers.equalTo(userList.get(0).getId().intValue())))
+				.andExpect(jsonPath("$[0].name", Matchers.equalTo(userList.get(0).getName())))
+				.andExpect(jsonPath("$[1].id", Matchers.equalTo(userList.get(1).getId().intValue())))
+				.andExpect(jsonPath("$[1].name", Matchers.equalTo(userList.get(1).getName())));
 	}
 	
 
@@ -105,7 +124,7 @@ public class UserRestControllerTest extends RestControllersTest{
 	private RequestBuilder getUser(Long id, String name) throws Exception {
 		StringBuilder url = new StringBuilder(this.baseUrl);
 		if (id != null) url.append("/"+id.toString());
-		else if (name != null) url.append("/"+name);
+		else if (name != null) url.append("/name/"+name);
 		
 		return get(url.toString())
 				.contentType(contentType);		

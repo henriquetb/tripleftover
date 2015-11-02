@@ -8,6 +8,6 @@ import com.tripleftover.User;
 
 
 public interface UserRepository extends JpaRepository<User, Long>{
-	Collection<User> findByName(String name);
+	Collection<User> findByNameLikeIgnoreCase(String name);
 	User findById(Long id);
 }
