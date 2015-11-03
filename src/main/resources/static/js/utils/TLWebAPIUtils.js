@@ -73,35 +73,6 @@ var TLWebAPIUtils = {
 			}
 		}.bind(this),
 		
-
-		/**
-		 * receives an array (or only one) of markets (currency code to be sold and bought) 
-		 *   - market = {"has":"aud", "wants":"eur"}
-		 * returns a list of lists with the best offers for each currency
-		 * */
-		getOffersPerMarket: function(marketCodes){
-			if ( (marketCodes instanceof Array) != true) {
-				marketCodes = [marketCodes];
-			}
-			
-			var marketsOffers = [];
-			var i = 0;
-			
-			for ( var key in marketCodes) {
-				var marketOffers = [];
-				$.get("/offers/"+marketCodes[key].has+"/"+marketCodes[key].wants, function(result) {
-					
-					marketOffers = result;
-					
-					if (marketOffers.length > 0) marketsOffers.push(marketOffers);
-					
-					if (++i == marketCodes.length){
-						TLServerActions.receiveOffersPerMarket(marketsOffers);
-					}
-				}.bind(this));
-				
-			}
-		}.bind(this),
 		
 }
 

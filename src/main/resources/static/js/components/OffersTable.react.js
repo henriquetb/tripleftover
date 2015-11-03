@@ -4,6 +4,7 @@ var ReactPropTypes = React.PropTypes;
 var OffersTable = React.createClass({
 
 	propTypes: {
+		market: ReactPropTypes.object.isRequired,
 		offers: ReactPropTypes.array.isRequired
 	},
 	
@@ -17,15 +18,14 @@ var OffersTable = React.createClass({
 				<tr key={offers[key].id}>
 					<td>{offers[key].user.name}</td>
 					<td>{offers[key].amount} {offers[key].has}</td>
-					<td>{offers[key].amount*offers[key].rate} {offers[key].wants}</td>
+					<td>{parseFloat(offers[key].amount*offers[key].rate).toFixed(2)} {offers[key].wants}</td>
 					<td>{offers[key].rate} ({offers[key].wants}/{offers[key].has})</td>
 				</tr>
 			);
 		}
-
 		return (
-				<div>
-					<span className="marketTitle">Users that have USD and want AUD:</span>
+				<div className="tableDiv">
+					<span className="marketTitle">Users that have {this.props.market.has} and want {this.props.market.wants}:</span>
 			      	<table>
 						<thead>
 						<tr>

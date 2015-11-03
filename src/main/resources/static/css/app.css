@@ -32,11 +32,61 @@ body {
 	font-smoothing: antialiased;
 }
 
+a{
+	font-size: 1.1em;
+	color: #4d4d4d;
+	font-weight: bolder;
+}
+
 button,
 input[type="checkbox"] {
   outline: none;
 }
 
 span.marketTitle {
-	color: #6699CC;
+	color: #678197;
+	font-size: 1.2em;
+}
+
+#info {
+	color: #678197;
+	font-size: 0.8em;
+    position: absolute;
+    bottom: 10px;
+}
+
+table {
+	border-top:1px solid #e5eff8;
+	border-right:1px solid #e5eff8;
+	margin:1em auto;
+	border-collapse:collapse;
+}
+td {
+	color:#678197;
+	border-bottom:1px solid #e5eff8;
+	border-left:1px solid #e5eff8;
+	padding:.3em 1em;
+	text-align:center;
+}
+thead tr {
+	background:#f4f9fe;
+	text-align:center;
+	font-weight: bold;
+	color:#66a3d3;
+}
+
+#header{
+	border:1px solid #e5eff8;
+    height: 100px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.floatLeft{
+	float: left;
+    padding-right: 30px;
+    padding-left: 30px;
+}
+.tableDiv{
+	margin-bottom: 30px;
 }

@@ -3,7 +3,7 @@ var Header = require('./Header.react');
 var MainSection = require('./MainSection.react');
 var React = require('react');
 var OfferStore = require('../stores/OfferStore');
-var TLWebAPIUtils = require('../utils/TLWebAPIUtils');
+var OfferWebAPIUtils = require('../utils/OfferWebAPIUtils');
 
 /**
  * Retrieve the current TODO data from the TodoStore
@@ -26,7 +26,8 @@ var App = React.createClass({
 	  //TLWebAPIUtils.getAllOffers();
 	  
 	  //TLWebAPIUtils.getOffersHasCurrency(["usd", "aud"]);
-	  TLWebAPIUtils.getOffersPerMarket([{"has":"aud", "wants":"eur"}]);
+	  OfferWebAPIUtils.getOffersPerMarket([{"has":"aud", "wants":"eur"}, {"has":"eur", "wants":"aud"}]);
+	  
 	  
 	  this.setState(getAppState());
   },

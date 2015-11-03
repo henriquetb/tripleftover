@@ -10,7 +10,7 @@ var TextInput = React.createClass({
     className: ReactPropTypes.string,
     id: ReactPropTypes.string,
     placeholder: ReactPropTypes.string,
-    onSave: ReactPropTypes.func.isRequired,
+    onChange: ReactPropTypes.func.isRequired,
     value: ReactPropTypes.string,
     autoFocus: ReactPropTypes.bool
   },
@@ -30,7 +30,7 @@ var TextInput = React.createClass({
         className={this.props.className}
         id={this.props.id}
         placeholder={this.props.placeholder}
-        onBlur={this._save}
+      	onBlur={this._save}
         onChange={this._onChange}
         onKeyDown={this._onKeyDown}
         value={this.state.value}
@@ -38,16 +38,16 @@ var TextInput = React.createClass({
       />
     );
   },
-
+  
   /**
    * Invokes the callback passed in as onSave, allowing this component to be
    * used in different ways.
    */
   _save: function() {
-    this.props.onSave(this.state.value);
-    this.setState({
+    this.props.onChange(this.state.value, this);
+    /*this.setState({
       value: ''
-    });
+    });*/
   },
 
   /**

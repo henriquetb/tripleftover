@@ -12,13 +12,19 @@ var MainSection = React.createClass({
   },
   
   render: function() {
+	  
 	  var offerTables = [];
 
 	  var offers = this.props.allOffers;
 
 	  for ( var key in offers) {
-		  offerTables.push(<OffersTable key={key} offers={offers[key]} />);
+		  var market = {
+				  "has": offers[key][0].has,
+				  "wants": offers[key][0].wants
+		  }
+		  offerTables.push(<OffersTable key={key} offers={offers[key]} market={market} />);
 	  }
+	  
 	  
 	  return (
 			  <section id="offers">
