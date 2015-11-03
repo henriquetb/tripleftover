@@ -70,10 +70,10 @@ public class UserRestControllerTest extends RestControllersTest{
 
 	
 	@Test
-	public void findByName_NonExistingName_returnsEmptyString() throws Exception {
+	public void findByName_NonExistingName_returnsEmptyArray() throws Exception {
 		mockMvc.perform(getUser(null, "noname"))
 				.andExpect(status().isOk())
-				.andExpect(content().string(""));
+				.andExpect(jsonPath("$", Matchers.hasSize(0)));
 				//.andDo(print());
 	}
 	
@@ -81,6 +81,9 @@ public class UserRestControllerTest extends RestControllersTest{
 	public void findByName_ExistingPartial_returns2UserAttributes() throws Exception {
 		mockMvc.perform(getUser(null, "h"))
 				.andExpect(status().isOk())
+				
+				.andExpect(jsonPath("$", Matchers.hasSize(2)))
+				
 				.andExpect(jsonPath("$[0].id", Matchers.equalTo(userList.get(0).getId().intValue())))
 				.andExpect(jsonPath("$[0].name", Matchers.equalTo(userList.get(0).getName())))
 				.andExpect(jsonPath("$[1].id", Matchers.equalTo(userList.get(1).getId().intValue())))
