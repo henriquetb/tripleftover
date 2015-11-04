@@ -33,6 +33,7 @@ var performRequest = function(options){
 	var url = baseUrl;
 	
 	var callback = options.callback;
+	var type = options.type || 'GET'
 	var offerId = options.offerId;
 	var userId = options.userId
 	var has = options.has;
@@ -58,6 +59,7 @@ var performRequest = function(options){
 	$.ajax({
 		"url": url,
 		"datatype": "json",
+		"type": type,
 		"data": newOfferData,
 		"success": function(data, textStatus, jqXHR){
 			if (callback) callback(data);
@@ -67,16 +69,17 @@ var performRequest = function(options){
 };
 
 
+
 var OfferWebAPIUtils = {
 		getAllOffers: function(){
-			performRequest();
+			//performRequest();
 		},
 
 		/**
 		 * receives an array of currency codes (or only one)
 		 * returns a list of lists with the offers for each HAS currency
 		 * */
-		getOffersHasCurrency: function(currencyCodes){
+		/*getOffersHasCurrency: function(currencyCodes){
 			if ( (currencyCodes instanceof Array) != true) {
 				currencyCodes = [currencyCodes];
 			};			
@@ -94,14 +97,14 @@ var OfferWebAPIUtils = {
 				}.bind(this));
 				
 			}
-		}.bind(this),
+		}.bind(this),*/
 		
 
 		/**
 		 * receives an array of offers with Wants = codes
 		 * returns a list of lists with the offers for each WANTS currency
 		 * */
-		getOffersWantsCurrency: function(currencyCodes){
+		/*getOffersWantsCurrency: function(currencyCodes){
 			if ( (currencyCodes instanceof Array) != true) {
 				currencyCodes = [currencyCodes];
 			};			
@@ -119,8 +122,7 @@ var OfferWebAPIUtils = {
 				}.bind(this));
 				
 			}
-		}.bind(this),
-		
+		}.bind(this),*/
 		
 
 		/**
@@ -157,6 +159,39 @@ var OfferWebAPIUtils = {
 			
 		}.bind(this),
 
+		/**
+		 * receives an array of markets (currency code to be sold and bought) 
+		 *   - market = {"has":"aud", "wants":"eur"}
+		 * returns a list of lists with the offers for each currency
+		 * */
+		getOffersPerUser: function(userId){
+			
+			
+			var requestCallback = function(returnedData){
+				TLServerActions.receiveOffersPerUser(returnedData);
+			}.bind(this);
+			
+			performRequest({
+				"callback": requestCallback,
+				"userId": userId, 
+			});
+		
+		}.bind(this),
+
+		
+		deleteOffer:  function(offerId){
+			
+			var requestCallback = function(returnedData){
+				TLServerActions.deleteOffer(returnedData);
+			}.bind(this);
+			
+			performRequest({
+				"callback": requestCallback,
+				"offerId": offerId, 
+				"type": "DELETE"
+			});
+		
+		}.bind(this),
 		
 }
 

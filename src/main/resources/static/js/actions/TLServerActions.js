@@ -19,7 +19,7 @@ var TLServerAction = {
 		},
 
 
-		receiveOffersHasCurrency: function(hasOffers) {
+		/*receiveOffersHasCurrency: function(hasOffers) {
 			AppDispatcher.dispatch({
 				actionType: OfferConstants.RECEIVE_HAS_OFFERS,
 				hasOffers: hasOffers
@@ -31,7 +31,7 @@ var TLServerAction = {
 				actionType: OfferConstants.RECEIVE_WANTS_OFFERS,
 				wantsOffers: wantsOffers
 			});
-		},
+		},*/
 		
 		receiveOffersPerMarket: function(marketsOffers) {
 			AppDispatcher.dispatch({
@@ -39,6 +39,22 @@ var TLServerAction = {
 				marketsOffers: marketsOffers
 			});
 		},
+		
+		receiveOffersPerUser: function(userOffers) {
+			AppDispatcher.dispatch({
+				actionType: OfferConstants.RECEIVE_USER_OFFERS,
+				userOffers: userOffers
+			});
+		},
+		
+		deleteOffer: function(deletedOffer) {
+			AppDispatcher.dispatch({
+				actionType: OfferConstants.RECEIVE_OFFER_DELETED,
+				deletedOffer: deletedOffer
+			});
+		},
+		
+		
 		
 }
 

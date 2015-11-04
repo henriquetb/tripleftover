@@ -8,21 +8,26 @@ var OffersTable = require('./OffersTable.react');
 var MainSection = React.createClass({
 	
   propTypes: {
-    allOffers: ReactPropTypes.array.isRequired
+    markets: ReactPropTypes.array.isRequired
   },
   
   render: function() {
 	  
 	  var offerTables = [];
 
-	  var offers = this.props.allOffers;
+	  var markets = this.props.markets;
 
-	  for ( var key in offers) {
-		  var market = {
-				  "has": offers[key][0].has,
-				  "wants": offers[key][0].wants
+	  for ( var key in markets) {
+		  if (markets[key].length == 0) continue;
+		  var market;
+		  for (var i in markets[key]){
+			  market = {
+					  "has": markets[key][i].has,
+					  "wants": markets[key][i].wants
+			  }  
+			  break;
 		  }
-		  offerTables.push(<OffersTable key={key} offers={offers[key]} market={market} />);
+		  offerTables.push(<OffersTable key={key} offers={markets[key]} market={market} />);
 	  }
 	  
 	  

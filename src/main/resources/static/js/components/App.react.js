@@ -3,6 +3,7 @@ var Header = require('./Header.react');
 var MainSection = require('./MainSection.react');
 var React = require('react');
 var OfferStore = require('../stores/OfferStore');
+var OfferConstants = require('../constants/OfferConstants');
 var OfferWebAPIUtils = require('../utils/OfferWebAPIUtils');
 
 /**
@@ -10,37 +11,36 @@ var OfferWebAPIUtils = require('../utils/OfferWebAPIUtils');
  */
 function getAppState() {
   return {
-    allOffers: OfferStore.getAll() || [],
+    markets: OfferStore.getMarketsLists() || [],
   };
 }
 
 
 var App = React.createClass({
 
+	
   getInitialState: function() {
     return getAppState() ;
   },
 
   componentWillMount: function() {
-	  OfferStore.addChangeListener(this._onChange);
-	  //TLWebAPIUtils.getAllOffers();
+	  OfferStore.addChangeListener(OfferConstants.CHANGE_MARKETS_EVENT, this._onChange);
 	  
-	  //TLWebAPIUtils.getOffersHasCurrency(["usd", "aud"]);
-	  OfferWebAPIUtils.getOffersPerMarket([{"has":"aud", "wants":"eur"}, {"has":"eur", "wants":"aud"}]);
-	  
+	  OfferWebAPIUtils.getOffersPerMarket([{"has":"aud", "wants":"eur"}, {"has":"eur", "wants":"aud"}]);  
 	  
 	  this.setState(getAppState());
   },
 
+  
   componentWillUnmount: function() {
-	  OfferStore.removeChangeListener(this._onChange);
+	  OfferStore.removeChangeListener(OfferConstants.CHANGE_MARKETS_EVENT, this._onChange);
   },
 
   render: function() {
     return (
       <div>
         <Header />
-        <MainSection allOffers={this.state.allOffers}/>
+        <MainSection markets={this.state.markets}/>
       </div>
     );
   },

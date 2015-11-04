@@ -4,9 +4,8 @@ var EventEmitter = require('events').EventEmitter;
 var OfferConstants = require('../constants/OfferConstants');
 var assign = require('object-assign');
 
-var CHANGE_EVENT = 'change';
-
 var _offers = [];
+var _marketsLists = [];
 
 /**
  * Create an Offer item.
@@ -36,75 +35,97 @@ function update(id, updates) {
   _offers[id] = assign({}, _offers[id], updates);
 }
 
+
+/**
+ * Delete an Offer item.
+ * @param  {string} id
+ */
+function destroy(id) {
+	for ( var key in _marketsLists) {
+		for (var o in _marketsLists[key]){
+			if (_marketsLists[key][o].id == id){
+				_marketsLists[key].splice(o, 1);
+			}
+		}
+	}
+	
+	for (var key in _offers){
+		if (_offers[key].id == id){
+			_offers.splice(key, 1);
+		}
+	}
+}
+
+
 var OfferStore = assign({}, EventEmitter.prototype, {
 
   /**
    * Get the entire collection of Offers.
    * @return {object}
    */
-  getAll: function() {
-    return _offers;
+  getMarketsLists: function() {
+    return _marketsLists;
+  },
+  getOffers: function() {
+	  return _offers;
   },
 
-  emitChange: function() {
-    this.emit(CHANGE_EVENT);
+  emitChange: function(event) {
+    this.emit(OfferConstants[event]);
+  },
+  
+
+  /**
+   * @param {function} callback
+   */
+  addChangeListener: function(event, callback) {
+    this.on(event, callback);
   },
 
   /**
    * @param {function} callback
    */
-  addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
-
-  /**
-   * @param {function} callback
-   */
-  removeChangeListener: function(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
+  removeChangeListener: function(event, callback) {
+    this.removeListener(event, callback);
   }
 });
 
 // Register callback to handle all updates
 AppDispatcher.register(function(action) {
-  var text;
 
   switch(action.actionType) {
-    case OfferConstants.OFFER_CREATE:
-      text = action.text.trim();
-      if (text !== '') {
-        create(text);
-        OfferStore.emitChange();
-      }
-      break;
-
-    case OfferConstants.OFFER_EDIT:
-      text = action.text.trim();
-      if (text !== '') {
-        update(action.id, {text: text});
-        OfferStore.emitChange();
-      }
-      break;
 
     case OfferConstants.RECEIVE_RAW_OFFERS:
     	_offers = action.allOffers;
-    	OfferStore.emitChange();
+    	OfferStore.emitChange(OfferConstants.CHANGE_OFFERS_EVENT);
       break;
 
-    case OfferConstants.RECEIVE_HAS_OFFERS:
+    /*case OfferConstants.RECEIVE_HAS_OFFERS:
     	_offers = action.hasOffers;
-    	OfferStore.emitChange();
+    	OfferStore.emitChange(CHANGE_MARKETS_EVENT);
       break;
 
     case OfferConstants.RECEIVE_WANTS_OFFERS:
     	_offers = action.wantsOffers;
-    	OfferStore.emitChange();
-      break;
+    	OfferStore.emitChange(CHANGE_MARKETS_EVENT);
+      break;*/
       
     case  OfferConstants.RECEIVE_MARKETS_OFFERS:
-    	_offers = action.marketsOffers;
-    	OfferStore.emitChange();
+    	_marketsLists = action.marketsOffers;
+    	OfferStore.emitChange(OfferConstants.CHANGE_MARKETS_EVENT);
       break;
+      
+    case  OfferConstants.RECEIVE_USER_OFFERS:
+    	_offers = action.userOffers;
+    	OfferStore.emitChange(OfferConstants.CHANGE_OFFERS_EVENT);
+      break;
+      
+    case  OfferConstants.RECEIVE_OFFER_DELETED:
+    	destroy(action.deletedOffer.id);
+    	OfferStore.emitChange(OfferConstants.CHANGE_OFFERS_EVENT);
+    	OfferStore.emitChange(OfferConstants.CHANGE_MARKETS_EVENT);
+      break;
+      
       
     default:
       // no op

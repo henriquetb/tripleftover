@@ -23,7 +23,9 @@ body {
 	font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	line-height: 1.4em;
 	color: #4d4d4d;
-	width: 550px;
+	min-width: 550px;
+	max-width: 1024px;
+	width: 90%;
 	margin: 0 auto;
 	-webkit-font-smoothing: antialiased;
 	-moz-font-smoothing: antialiased;
@@ -32,10 +34,11 @@ body {
 	font-smoothing: antialiased;
 }
 
-a{
+a, .link{
 	font-size: 1.1em;
 	color: #4d4d4d;
 	font-weight: bolder;
+	cursor: pointer;
 }
 
 button,
@@ -60,6 +63,7 @@ table {
 	border-right:1px solid #e5eff8;
 	margin:1em auto;
 	border-collapse:collapse;
+	width: 90%;
 }
 td {
 	color:#678197;
@@ -87,6 +91,30 @@ thead tr {
     padding-right: 30px;
     padding-left: 30px;
 }
+
+.floatRight{
+	float: right;
+}
 .tableDiv{
 	margin-bottom: 30px;
+}
+
+.overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(183, 183, 183, 0.35);
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+}
+.lightboxContet{
+    position: relative;
+    background: #f4f9fe;
+    border: 1px solid #e5eff8;
+    z-index: 11;
+    width: 500px;
+    height: 600px;
+    margin: 0 auto;
+    padding: 10px;
 }
