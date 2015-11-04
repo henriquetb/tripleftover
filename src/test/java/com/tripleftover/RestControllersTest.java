@@ -8,6 +8,7 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -20,6 +21,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.tripleftover.Util.CurrencyCode;
 import com.tripleftover.repository.CurrencyRepository;
 import com.tripleftover.repository.OfferRepository;
 import com.tripleftover.repository.UserRepository;
@@ -65,8 +67,12 @@ public class RestControllersTest {
 		this.offerRepository.deleteAllInBatch();
 		this.userRepository.deleteAllInBatch();
 		this.currencyRepository.deleteAllInBatch();
+	}	
+
+	@Test
+	public void assuresTestsAreWorking() {
+		assertTrue(true);
 	}
-	
 	protected String json(Object o) throws IOException {
 		MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
 		this.mappingJackson2HttpMessageConverter.write(o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
