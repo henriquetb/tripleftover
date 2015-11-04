@@ -16,6 +16,7 @@ This project was developed using the Java Spring framework for the server REST a
 ## How to run the server
 
 * Clone the code to your server. $ git clone http://gitAddress
+* $ chmod 755 gradlew
 * $ ./gradlew build
 * $ ./gradlew run
 * the rest servicer will be available at http://localhost:8080
@@ -23,4 +24,4 @@ This project was developed using the Java Spring framework for the server REST a
 ## How to set-up the client
 * go to the static resources folder. $ cd TripLeftoverDirectory/src/main/resources/static
 * install the JS dependencies. $ npm install
-* generate the bunde.js file. $ npm start
+* generate the bunde.js file. $ npm build
