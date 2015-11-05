@@ -1,6 +1,7 @@
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var Lightbox = require('./Lightbox.react');
+var Utils = require('../utils/Utils');
 
 var OffersTable = React.createClass({
 
@@ -10,9 +11,11 @@ var OffersTable = React.createClass({
 	},
 	
 	render: function() {
-		  
+		
 		var offers = this.props.offers;
 		var offerItem = []
+		
+		offers.sort(Utils.genericComparable('rate', true));
 		
 		for (var key in offers) {
 			offerItem.push(
