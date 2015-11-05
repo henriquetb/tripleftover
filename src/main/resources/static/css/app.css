@@ -57,7 +57,7 @@ span.marketTitle {
 #info {
 	color: #678197;
 	font-size: 0.8em;
-    position: absolute;
+    position: inherit;
     bottom: 10px;
 }
 

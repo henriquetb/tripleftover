@@ -49,7 +49,7 @@ var MyOffers = React.createClass({
 		
 		this.haveAmount = <TextInput type="number" id="haveAmount" ref="haveAmount" placeholder="Amount" autoFocus={true} />; 
 		this.have = <SelectInput id="haveCurrency" ref="haveCurrency" options={this.availableCurrencies} defaultValue={this.hasProp} />;
-		this.wantAmount = <TextInput type="number" id="wantAmount" ref="wantAmount" placeholder="Amount" autoFocus={false} />;
+		this.wantAmount = <TextInput type="number" id="wantAmount" ref="wantAmount" placeholder="Amount" autoFocus={false} onChange={this._setRate} />;
 		this.want = <SelectInput id="wantCurrency" ref="wantCurrency" options={this.availableCurrencies} defaultValue={this.wantsProp} />;
 		
 	
@@ -70,7 +70,7 @@ var MyOffers = React.createClass({
 					{this.want}
 					
 					<br />
-					<TextInput type="number" className="smallInput" id="rate" ref="rate" placeholder="Rate" autoFocus={false} />
+					<TextInput type="number" className="smallInput" id="rate" ref="rate" placeholder="Rate" autoFocus={false} onChange={this._setRate} />
 					
 					<br />
 					<div className="floatRight"> 
@@ -142,6 +142,19 @@ var MyOffers = React.createClass({
 				return this.state.myOffers[i];
 		}
 		return null;
+	},
+	
+	_setRate: function(value, elem) {
+		var id = elem.props.id;
+		if (!value) {
+			this.refs.wantAmount.setValue("");
+			this.refs.rate.setValue("");
+		}
+		if (id === 'rate'){
+			this.refs.wantAmount.setValue(this.refs.haveAmount.getValue() * value);
+		} else {
+			this.refs.rate.setValue(this.refs.haveAmount.getValue() / value);
+		}
 	},
 
 	_onChange: function() {
