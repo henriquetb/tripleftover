@@ -11,13 +11,13 @@ var SelectInput = React.createClass({
     defaultValue: ReactPropTypes.string,
     value: ReactPropTypes.string,
     options: ReactPropTypes.array,
-    onChange: ReactPropTypes.func.isRequired,
+    onChange: ReactPropTypes.func,
   },
 
   
   getInitialState: function() {
     return {
-      value: this.props.value || ''
+      value: this.props.value || this.props.defaultValue || ''
     };
   },
 
@@ -45,7 +45,7 @@ var SelectInput = React.createClass({
 			  </select>
 	  );
   },
-
+  
   /**
    * @param {object} event
    */
@@ -53,9 +53,14 @@ var SelectInput = React.createClass({
     this.setState({
       value: event.target.value
     }, function(){
-    	this.props.onChange(this.state.value, this);
+    	if (this.props.onChange)
+    		this.props.onChange(this.state.value, this);
     }.bind(this) );
   },
+  
+  getValue: function(){
+	  return this.state.value
+  }
 });
 
 module.exports = SelectInput;

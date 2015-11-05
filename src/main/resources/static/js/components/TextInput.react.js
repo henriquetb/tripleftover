@@ -10,7 +10,7 @@ var TextInput = React.createClass({
     className: ReactPropTypes.string,
     id: ReactPropTypes.string,
     placeholder: ReactPropTypes.string,
-    onChange: ReactPropTypes.func.isRequired,
+    onChange: ReactPropTypes.func,
     value: ReactPropTypes.string,
     autoFocus: ReactPropTypes.bool
   },
@@ -44,7 +44,8 @@ var TextInput = React.createClass({
    * used in different ways.
    */
   _save: function() {
-    this.props.onChange(this.state.value, this);
+	  if (this.props.onChange)
+		  this.props.onChange(this.state.value, this);
     /*this.setState({
       value: ''
     });*/
@@ -66,7 +67,12 @@ var TextInput = React.createClass({
     if (event.keyCode === ENTER_KEY_CODE) {
       this._save();
     }
-  }
+  },
+  
+  getValue: function(){
+	  return this.state.value
+  },
+  
 
 });
 
