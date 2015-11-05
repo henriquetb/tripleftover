@@ -10,6 +10,7 @@ module.exports = keyMirror({
 	RECEIVE_MARKETS_OFFERS: null, 
 	RECEIVE_USER_OFFERS: null,
 	RECEIVE_OFFER_DELETED: null,
+	RECEIVE_OFFER_SAVED: null,
 
 
 	OFFER_CREATE: null,

@@ -25,6 +25,48 @@ function create(user, has, wants, amount, rate) {
   };
 }
 
+function savedOffer(offer) {
+	var hasOffer = offer.has;
+	var wantsOffer = offer.wants;
+	
+	var marketsUpdated = false;
+	var marketPosition = -1;
+	
+	for ( var key in _marketsLists) {
+		for (var o in _marketsLists[key]){
+			//checks if this the market of the offer
+			if (marketPosition > -1 || (_marketsLists[key][o].has == hasOffer && _marketsLists[key][o].wants == wantsOffer)){
+				marketPosition = key;
+				
+				//found the offer to edit 
+				if (_marketsLists[key][o].id == offer.id){
+					_marketsLists[key][o] = offer;
+					marketsUpdated = true;
+				}
+			} else {
+				break;
+			}
+		}
+		
+		if (marketPosition > -1 && !marketsUpdated){
+			_marketsLists[marketPosition].push(offer);
+		}
+		if (marketPosition > -1) break;
+	}
+	
+	var offerPosition = -1;
+	for (var key in _offers){
+		if (_offers[key].id == offer.id){
+			offerPosition = key;
+			_offers[key] = offer;
+		}
+	}
+	if (offerPosition == -1){
+		_offers.push(offer)
+	}
+	
+} 
+
 /**
  * Update an Offer.
  * @param  {string} id
@@ -126,7 +168,13 @@ AppDispatcher.register(function(action) {
     	OfferStore.emitChange(OfferConstants.CHANGE_MARKETS_EVENT);
       break;
       
+    case  OfferConstants.RECEIVE_OFFER_SAVED:
+    	savedOffer(action.savedOffer);
+    	OfferStore.emitChange(OfferConstants.CHANGE_OFFERS_EVENT);
+    	OfferStore.emitChange(OfferConstants.CHANGE_MARKETS_EVENT);
+      break;
       
+     
     default:
       // no op
   }

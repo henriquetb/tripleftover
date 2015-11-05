@@ -7,7 +7,6 @@ var OfferWebAPIUtils = require('../utils/OfferWebAPIUtils');
 var Lightbox = require('./Lightbox.react');
 var MyOffers = require('./MyOffers.react');
 
-
 var Header = React.createClass({
 
 	getInitialState: function() {
@@ -19,7 +18,6 @@ var Header = React.createClass({
 			showLightbox: false
 		};
 	},
-
 	
 	
 	render: function() {

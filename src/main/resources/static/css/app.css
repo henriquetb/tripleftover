@@ -118,3 +118,11 @@ thead tr {
     margin: 0 auto;
     padding: 10px;
 }
+
+.formLabel {
+	font-size: 1.2em;
+}
+
+.smallInput{
+	width: 50px;
+}

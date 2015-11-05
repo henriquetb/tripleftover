@@ -56,9 +56,11 @@ var performRequest = function(options){
 		return result;
 	}.bind(this));*/
 	
+	
 	$.ajax({
 		"url": url,
 		"datatype": "json",
+		"contentType": "application/json",
 		"type": type,
 		"data": newOfferData,
 		"success": function(data, textStatus, jqXHR){
@@ -67,7 +69,6 @@ var performRequest = function(options){
 	});
 	
 };
-
 
 
 var OfferWebAPIUtils = {
@@ -190,6 +191,32 @@ var OfferWebAPIUtils = {
 				"offerId": offerId, 
 				"type": "DELETE"
 			});
+		
+		}.bind(this),
+		
+
+
+		/**
+		 * saveOffer will deal with both update (PUT /offers/id) and create new(POST /offers).
+		 * if the offerId is null, assumes create new.
+		 * */
+		saveOffer:  function(offerId, newOffer){
+			 
+			var requestCallback = function(addedOffer){
+				TLServerActions.saveOffer(addedOffer);
+			}.bind(this);
+			
+			var type = 'POST'
+			if (offerId){
+				type = "PUT"
+			}
+			performRequest({
+				"callback": requestCallback,
+				"offerId": offerId, 
+				"type": type,
+				"newOfferData": JSON.stringify(newOffer),
+			});
+			
 		
 		}.bind(this),
 		

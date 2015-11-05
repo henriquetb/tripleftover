@@ -54,8 +54,12 @@ var TLServerAction = {
 			});
 		},
 		
-		
-		
+		saveOffer: function(savedOffer) {
+			AppDispatcher.dispatch({
+				actionType: OfferConstants.RECEIVE_OFFER_SAVED,
+				savedOffer: savedOffer
+			});
+		},
 }
 
 module.exports = TLServerAction;
