@@ -40,6 +40,9 @@ a, .link{
 	font-weight: bolder;
 	cursor: pointer;
 }
+.red{
+	color: #F58D8D; 
+}
 
 button,
 input[type="checkbox"] {

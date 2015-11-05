@@ -50,17 +50,22 @@ var SelectInput = React.createClass({
    * @param {object} event
    */
   _onChange: function(/*object*/ event) {
-    this.setState({
-      value: event.target.value
-    }, function(){
-    	if (this.props.onChange)
-    		this.props.onChange(this.state.value, this);
-    }.bind(this) );
+      var value = event.target.value;
+      this.setValue(value);
+  		
   },
   
   getValue: function(){
 	  return this.state.value
-  }
+  }, 
+  setValue: function(value){
+	    this.setState({
+	      value: value
+	    }, function(){
+	    	if (this.props.onChange)
+	    		this.props.onChange(this.state.value, this);
+	    }.bind(this) );
+  },
 });
 
 module.exports = SelectInput;

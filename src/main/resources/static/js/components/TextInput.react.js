@@ -12,7 +12,8 @@ var TextInput = React.createClass({
     placeholder: ReactPropTypes.string,
     onChange: ReactPropTypes.func,
     value: ReactPropTypes.string,
-    autoFocus: ReactPropTypes.bool
+    autoFocus: ReactPropTypes.bool,
+    disabled: ReactPropTypes.bool,
   },
 
   getInitialState: function() {
@@ -35,6 +36,7 @@ var TextInput = React.createClass({
         onKeyDown={this._onKeyDown}
         value={this.state.value}
         autoFocus={this.props.autoFocus}
+      	disabled={this.props.disabled}
       />
     );
   },
@@ -55,10 +57,10 @@ var TextInput = React.createClass({
    * @param {object} event
    */
   _onChange: function(/*object*/ event) {
-    this.setState({
-      value: event.target.value
-    });
+	  var value = event.target.value
+	  this.setValue(value);
   },
+  
 
   /**
    * @param  {object} event
@@ -71,6 +73,12 @@ var TextInput = React.createClass({
   
   getValue: function(){
 	  return this.state.value
+  },
+  
+  setValue: function(value){
+	  this.setState({
+		  value: value
+	  });
   },
   
 

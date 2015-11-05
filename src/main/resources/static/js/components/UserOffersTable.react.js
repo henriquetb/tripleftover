@@ -7,7 +7,8 @@ var UserOffersTable = React.createClass({
 
 	propTypes: {
 		ownOffers: ReactPropTypes.bool || false,
-		offers: ReactPropTypes.array.isRequired
+		offers: ReactPropTypes.array.isRequired,
+		onSelectOffer: ReactPropTypes.func,
 	},
 	
 	componentDidMount: function() {
@@ -28,7 +29,12 @@ var UserOffersTable = React.createClass({
 		
 		for (var key in offers) {
 			var action = <span className="link" onClick={this._clickOffer.bind(this, offers[key].id)}> $ </span>;
-			if (this.props.ownOffers) action = <span className="link" onClick={this._clickDelete.bind(this, offers[key].id)}> X </span>
+			if (this.props.ownOffers){
+				action = <div>
+						<span className="link red" onClick={this._clickDelete.bind(this, offers[key].id)}> X </span> | 
+						<span className="link" onClick={this._clickEdit.bind(this, offers[key].id)}> E </span>
+					</div>
+			}
 			
 			offerItem.push(
 				<tr key={key}>
@@ -72,6 +78,11 @@ var UserOffersTable = React.createClass({
 	
 	_clickOffer: function(){
 		alert('offer');
+	},
+	
+	_clickEdit: function(id){
+		if (this.props.onSelectOffer)
+			this.props.onSelectOffer(id);
 	},
 	
 });
