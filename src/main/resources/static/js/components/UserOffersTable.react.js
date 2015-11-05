@@ -76,9 +76,9 @@ var UserOffersTable = React.createClass({
 		this.props.offers =  OfferStore.getOffers() || [];
 	},
 	
-	_clickSort: function (){
+	_clickSort: function (element){
 		this.setState({
-			col: 'has',
+			col: element.target.id,
 			order: !this.state.order
 		});
 	},

@@ -5,17 +5,28 @@ var Utils = require('../utils/Utils');
 
 var OffersTable = React.createClass({
 
+	
+	getInitialState: function() {
+		return {
+			col: 'amount',
+			order: true
+		} ;
+	},
+	
 	propTypes: {
 		market: ReactPropTypes.object.isRequired,
 		offers: ReactPropTypes.array.isRequired
 	},
 	
+	shouldComponentUpdate: function(nextProps, nextState){
+		nextProps.offers.sort(Utils.genericComparable(nextState.col, nextState.order));
+		return true;
+	},
+	
 	render: function() {
 		
 		var offers = this.props.offers;
-		var offerItem = []
-		
-		offers.sort(Utils.genericComparable('rate', true));
+		var offerItem = [];
 		
 		for (var key in offers) {
 			offerItem.push(
@@ -38,8 +49,8 @@ var OffersTable = React.createClass({
 						<tr>
 							<td>User</td>
 							<td>Wants</td>
-							<td>Has</td>
-							<td>Rate</td>
+							<td id="amount" className="link" onClick={this._clickSort}>Has</td>
+							<td id="rate" className="link" onClick={this._clickSort}>Rate</td>
 							<td></td>
 						</tr>
 						</thead>
@@ -52,7 +63,14 @@ var OffersTable = React.createClass({
 	
 	
 	_clickOffer: function(){
-		alert('oee');
+		alert('make an offer. Not implemented!');
+	},
+	
+	_clickSort: function (element){
+		this.setState({
+			col: element.target.id,
+			order: !this.state.order
+		});
 	},
 });
 
